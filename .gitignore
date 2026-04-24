@@ -1,0 +1,23 @@
+# Data file (auto-generated at runtime)
+students.data
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

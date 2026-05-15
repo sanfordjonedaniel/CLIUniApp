@@ -1,5 +1,6 @@
 """
-Run this once to populate students.data with sample students and enrolments.
+Populates students.data with pre-registered students and enrolled subjects.
+These credentials work for both CLIUniApp and GUIUniApp logins.
     python seed.py
 """
 import sys

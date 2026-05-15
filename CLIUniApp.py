@@ -1,5 +1,8 @@
+from colorama import Fore, Style, init
 from controllers.student_controller import StudentController
 from controllers.admin_controller import AdminController
+
+init(autoreset=True)
 
 
 def main():
@@ -7,13 +10,13 @@ def main():
     admin_ctrl = AdminController()
 
     while True:
-        choice = input("University System: (A)dmin, (S)tudent, or X : ").strip().upper()
+        choice = input(Fore.CYAN + "University System: (A)dmin, (S)tudent, or X : " + Style.RESET_ALL).strip().upper()
         if choice == 'A':
             admin_ctrl.run()
         elif choice == 'S':
             student_ctrl.run()
         elif choice == 'X':
-            print("Thank You")
+            print(Fore.YELLOW + "Thank You")
             break
 
 

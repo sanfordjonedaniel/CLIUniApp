@@ -1,3 +1,4 @@
+from colorama import Fore, Style
 from models.database import Database
 
 INDENT = "        "
@@ -6,7 +7,7 @@ INDENT = "        "
 class AdminController:
     def run(self):
         while True:
-            choice = input(f"{INDENT}Admin System (c/g/p/r/s/x): ").strip().lower()
+            choice = input(Fore.CYAN + f"{INDENT}Admin System (c/g/p/r/s/x): " + Style.RESET_ALL).strip().lower()
             if choice == 'c':
                 self._clear_database()
             elif choice == 'g':
@@ -22,7 +23,7 @@ class AdminController:
 
     def _show_students(self):
         students = Database.load()
-        print(f"{INDENT}Student List")
+        print(Fore.YELLOW + f"{INDENT}Student List")
         if not students:
             print(f"{INDENT}< Nothing to Display >")
             return
@@ -31,7 +32,7 @@ class AdminController:
 
     def _group_students(self):
         students = Database.load()
-        print(f"{INDENT}Grade Grouping")
+        print(Fore.YELLOW + f"{INDENT}Grade Grouping")
         if not students:
             print(f"{INDENT}< Nothing to Display >")
             return
@@ -46,13 +47,13 @@ class AdminController:
                     f"{s.name} :: {s.id} --> GRADE: {s.get_grade():>2} - MARK: {s.get_average_mark():.2f}"
                     for s in groups[grade]
                 )
-                print(f"{INDENT}{grade} --> [{entries}]")
+                print(Fore.YELLOW + f"{INDENT}{grade} --> [{entries}]")
 
     def _partition_students(self):
         students = Database.load()
-        print(f"{INDENT}PASS/FAIL Partition")
-        passing = [s for s in students if s.is_pass()]
-        failing = [s for s in students if not s.is_pass()]
+        print(Fore.YELLOW + f"{INDENT}PASS/FAIL Partition")
+        passing  = [s for s in students if s.is_pass()]
+        failing  = [s for s in students if not s.is_pass()]
         fail_str = ', '.join(
             f"{s.name} :: {s.id} --> GRADE: {s.get_grade():>2} - MARK: {s.get_average_mark():.2f}"
             for s in failing
@@ -61,23 +62,23 @@ class AdminController:
             f"{s.name} :: {s.id} --> GRADE: {s.get_grade():>2} - MARK: {s.get_average_mark():.2f}"
             for s in passing
         )
-        print(f"{INDENT}FAIL --> [{fail_str}]")
-        print(f"{INDENT}PASS --> [{pass_str}]")
+        print(Fore.YELLOW + f"{INDENT}FAIL --> [{fail_str}]")
+        print(Fore.YELLOW + f"{INDENT}PASS --> [{pass_str}]")
 
     def _remove_student(self):
-        student_id = input(f"{INDENT}Remove by ID: ").strip()
-        students = Database.load()
+        student_id = input(Fore.CYAN + f"{INDENT}Remove by ID: " + Style.RESET_ALL).strip()
+        students   = Database.load()
         for s in students:
             if s.id == student_id:
                 students.remove(s)
                 Database.save(students)
-                print(f"{INDENT}Removing Student {student_id} Account")
+                print(Fore.YELLOW + f"{INDENT}Removing Student {student_id} Account")
                 return
-        print(f"{INDENT}Student {student_id} does not exist")
+        print(Fore.RED + f"{INDENT}Student {student_id} does not exist")
 
     def _clear_database(self):
-        print(f"{INDENT}Clearing students database")
-        confirm = input(f"{INDENT}Are you sure you want to clear the database (Y)ES/(N)O: ").strip().upper()
+        print(Fore.YELLOW + f"{INDENT}Clearing students database")
+        confirm = input(Fore.RED + f"{INDENT}Are you sure you want to clear the database (Y)ES/(N)O: " + Style.RESET_ALL).strip().upper()
         if confirm == 'Y':
             Database.clear()
-            print(f"{INDENT}Students data cleared")
+            print(Fore.YELLOW + f"{INDENT}Students data cleared")
